@@ -19,10 +19,10 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (url.pathname === "/api/auth") {
+    if (url.pathname === "/auth" || url.pathname === "/api/auth") {
       const redirectUrl = new URL("https://github.com/login/oauth/authorize");
       redirectUrl.searchParams.set("client_id", env.GITHUB_CLIENT_ID);
-      redirectUrl.searchParams.set("redirect_uri", url.origin + "/api/callback");
+      redirectUrl.searchParams.set("redirect_uri", url.origin + "/callback");
       redirectUrl.searchParams.set("scope", "repo user");
       redirectUrl.searchParams.set(
         "state",
@@ -31,7 +31,7 @@ export default {
       return Response.redirect(redirectUrl.href, 301);
     }
 
-    if (url.pathname === "/api/callback") {
+    if (url.pathname === "/callback" || url.pathname === "/api/callback") {
       const code = url.searchParams.get("code");
       const response = await fetch(
         "https://github.com/login/oauth/access_token",
