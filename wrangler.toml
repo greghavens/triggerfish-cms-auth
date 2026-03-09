@@ -1,0 +1,3 @@
+name = "triggerfish-cms-auth"
+pages_build_output_dir = "./static"
+compatibility_date = "2025-04-01"
